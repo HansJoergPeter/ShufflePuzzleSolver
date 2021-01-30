@@ -58,8 +58,8 @@ class Configuration {
     offs2 *= 4;
     uint64_t const mask1 = 15ULL << offs1;
     uint64_t const mask2 = 15ULL << offs2;
-    auto v1 = (tiles_ & mask1) >> offs1;
-    auto v2 = (tiles_ & mask2) >> offs2;
+    auto const v1 = (tiles_ & mask1) >> offs1;
+    auto const v2 = (tiles_ & mask2) >> offs2;
     tiles_ &= ~(mask1 | mask2);
     tiles_ |= v1 << offs2;
     tiles_ |= v2 << offs1;
@@ -95,7 +95,7 @@ class Configuration {
 //----------------------------------------------------------------------------
 
 template <typename Func>
-void successors(Configuration conf, Func func) noexcept {
+void successors(Configuration const conf, Func func) noexcept {
   auto const succ = [func{move(func)}, h1{conf.hole()}, conf](int const drow,
                                                               int const dcol) {
     if (auto const h2 = conf.hole(drow, dcol); h2 != -1) {
@@ -196,7 +196,8 @@ int main(int const argc, char const* const argv[]) {
     });
 
     if ((++steps % 1000000) == 0) {
-      cout << steps << " / " << parents.size() << " / " << queue.size() << '\n';
+      cout << "steps: " << steps << "\t visited: " << parents.size()
+           << "\t queue: " << queue.size() << '\n';
     }
   }
 }
