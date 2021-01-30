@@ -13,5 +13,4 @@ endif()
 add_executable(puzzle  main.cpp)
 target_link_libraries(puzzle PRIVATE
   absl::flat_hash_map
-  absl::flat_hash_set
 )
