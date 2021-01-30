@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <absl/container/flat_hash_map.h>
-#include <absl/container/flat_hash_set.h>
 
 #include <cstdint>
 #include <cstdlib>
@@ -68,8 +67,8 @@ class Configuration {
 
   constexpr int8_t hole(int8_t const drow = 0,
                         int8_t const dcol = 0) const noexcept {
-    if (hole_ == -1) {
-      return -1;
+    if (hole_ == -1 || (!drow && !dcol)) {
+      return hole_;
     }
     int8_t const r = (hole_ / 4) + drow;
     if (r < 0 || r > 3) {
@@ -125,7 +124,6 @@ void printMove(Configuration const from, Configuration const to) {
     cout << "Move " << (int)to(h1) << " up\n";
   } else if (h2 == h1 - 4) {
     cout << "Move " << (int)from(h2) << " down\n";
-
   } else {
     cout << from << " --> " << to << '\n';
   }
@@ -170,22 +168,19 @@ int main(int const argc, char const* const argv[]) {
 
   auto const reachedTarget = [](Configuration conf, auto const& parents) {
     cout << "Reverse winning strategy:\n";
-    try {
+    // cout << conf.str() << '\n';
+    for (auto last = conf, conf = parents.at(last); last != conf;
+         last = conf, conf = parents.at(last)) {
+      printMove(conf, last);
       // cout << conf.str() << '\n';
-      for (auto last = conf, conf = parents.at(last);;
-           last = conf, conf = parents.at(last)) {
-        printMove(conf, last);
-        // cout << conf.str() << '\n';
-      }
-    } catch (exception const&) {
     }
   };
 
-  uint64_t step = 0;
+  uint64_t steps = 0;
   Configuration const init{argv + 1};
-  ::absl::flat_hash_map<Configuration, Configuration> parents;
-  for (stack<Configuration> queue{{init}}; !queue.empty();) {
-    auto const conf = queue.top();
+  ::absl::flat_hash_map<Configuration, Configuration> parents{{init, init}};
+  for (queue<Configuration> queue{{init}}; !queue.empty();) {
+    auto const conf = queue.front();
     // cout << conf << '\n';
     queue.pop();
 
@@ -195,13 +190,13 @@ int main(int const argc, char const* const argv[]) {
     }
 
     successors(conf, [&](auto const conf2) {
-      if (auto [it, n] = parents.emplace(conf2, conf); n) {
+      if (auto const [it, n] = parents.emplace(conf2, conf); n) {
         queue.push(conf2);
       }
     });
 
-    if ((++step % 1000000) == 0) {
-      cout << step << " / " << parents.size() << " / " << queue.size() << '\n';
+    if ((++steps % 1000000) == 0) {
+      cout << steps << " / " << parents.size() << " / " << queue.size() << '\n';
     }
   }
 }
