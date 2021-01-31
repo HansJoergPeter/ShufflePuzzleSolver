@@ -7,6 +7,10 @@
 
 namespace spsolver {
 
+/*
+  A generic sliding puzzle configuration based on a compact representation
+  that allows an efficient value semantics.
+*/
 template <uint8_t rows, uint8_t cols>
 class Configuration {
  public:

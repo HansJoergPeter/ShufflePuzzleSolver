@@ -1,6 +1,6 @@
 ##############################################################################
 cmake_minimum_required(VERSION 3.0)
-project(ShufflePuzzleSolver VERSION 1.0 LANGUAGES CXX)
+project(SlidingPuzzleSolver VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -24,20 +24,20 @@ else()
   set(HAS_ABSEIL  "0")
 endif()
 configure_file(src/Config.h.in  ${CMAKE_BINARY_DIR}/Config.h)
-add_library(ShufflePuzzleSolver::solver  ALIAS  spsolver)
+add_library(SlidingPuzzleSolver::solver  ALIAS  spsolver)
 
 
 ##############################################################################
 add_executable(solve_3x3  src/solve_3x3.cpp)
 target_link_libraries(solve_3x3  PRIVATE
-  ShufflePuzzleSolver::solver
+  SlidingPuzzleSolver::solver
 )
 
 
 ##############################################################################
 add_executable(solve_4x4  src/solve_4x4.cpp)
 target_link_libraries(solve_4x4  PRIVATE
-  ShufflePuzzleSolver::solver
+  SlidingPuzzleSolver::solver
 )
 
 

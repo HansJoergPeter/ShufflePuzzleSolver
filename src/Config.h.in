@@ -9,15 +9,11 @@
 namespace spsolver {
 
 #if @HAS_ABSEIL@
-
 template <typename Key, typename Value>
 using HashMap = ::absl::flat_hash_map<Key, Value>;
-
 #else
-
 template <typename Key, typename Value>
 using HashMap = std::unordered_map<Key, Value>;
-
 #endif
 
 }  // namespace spsolver
