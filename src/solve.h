@@ -20,7 +20,8 @@ void solve(Configuration const init, IsTarget const& isTarget) {
 
   // called if the target configuration is reached
   auto const reachedTarget = [](Configuration conf, auto const& parents) {
-    std::vector<Configuration> strategy{conf};
+    // collects the winning strategy in reverse order
+    std::vector strategy{conf};
     for (auto last = conf, conf = parents.at(last); last != conf;
          last = conf, conf = parents.at(last)) {
       strategy.emplace_back(conf);
@@ -44,6 +45,7 @@ void solve(Configuration const init, IsTarget const& isTarget) {
       }
     };
 
+    // prints the winning strategy in forward order
     cout << "Winning strategy:\n";
     for (auto b = crbegin(strategy), a = b++, e = crend(strategy); b != e;
          a = b++) {
