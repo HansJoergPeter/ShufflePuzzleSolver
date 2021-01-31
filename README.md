@@ -16,7 +16,11 @@ If Abseil is available, the usage of `std::unordered_map` is replaced by `absl::
 
 ## Compiling
 The solver command-line executables can be built using the standard CMake process.
-Feel free to add any additional configuration parameters to the first call to cmake (e.g., `-DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake`).
+Feel free to add any additional configuration parameters to the first call to cmake.
+For example,
+```bash
+-DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+```
 
 ```bash
 # in the root directory of the repo
