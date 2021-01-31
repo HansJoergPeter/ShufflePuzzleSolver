@@ -1,5 +1,5 @@
 # Sliding Puzzle Solver
-This is a naive brute-force solver for [sliding puzzles](https://en.wikipedia.org/wiki/Sliding_puzzle) written in C++17.
+This is a naive [brute-force](https://en.wikipedia.org/wiki/Brute-force_search) solver for [sliding puzzles](https://en.wikipedia.org/wiki/Sliding_puzzle) written in [C++17](https://en.cppreference.com/).
 
 
 ## Dependencies
