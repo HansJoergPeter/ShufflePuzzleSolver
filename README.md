@@ -7,7 +7,8 @@ There are no dependencies except for reasonably new versions of [CMake](https://
 
 Under Ubuntu, you can install these dependencies via:
 ```bash
-sudo  apt-get update  &&  apt-get install build-essentials cmake clang
+sudo  apt-get update
+sudo  apt-get install build-essential cmake clang
 ```
 
 There is an optional dependency to [Google's Abseil library](https://abseil.io/).
