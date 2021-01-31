@@ -1,16 +1,52 @@
-cmake_minimum_required(VERSION 3.5)
-project(PuzzleSolver VERSION 1.0 LANGUAGES CXX)
+##############################################################################
+cmake_minimum_required(VERSION 3.0)
+project(ShufflePuzzleSolver VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(absl CONFIG REQUIRED)
-
 if (NOT WIN32)
-  add_compile_options(-Wall -Wextra -Wno-unused-variable -Wno-unused-parameter)
+  add_compile_options(-Wall -Wextra)
 endif()
 
-add_executable(puzzle  main.cpp)
-target_link_libraries(puzzle PRIVATE
-  absl::flat_hash_map
+
+##############################################################################
+find_package(absl CONFIG)
+
+
+##############################################################################
+add_library(spsolver  INTERFACE)
+target_include_directories(spsolver  INTERFACE  src/  ${CMAKE_BINARY_DIR}/)
+if (absl::flat_hash_map)
+  target_link_libraries(spsolver  INTERFACE  absl::flat_hash_map)
+  set(HAS_ABSEIL  "1")
+else()
+  set(HAS_ABSEIL  "0")
+endif()
+configure_file(src/Config.h.in  ${CMAKE_BINARY_DIR}/Config.h)
+add_library(ShufflePuzzleSolver::solver  ALIAS  spsolver)
+
+
+##############################################################################
+add_executable(solve_3x3  src/solve_3x3.cpp)
+target_link_libraries(solve_3x3  PRIVATE
+  ShufflePuzzleSolver::solver
+)
+
+
+##############################################################################
+add_executable(solve_4x4  src/solve_4x4.cpp)
+target_link_libraries(solve_4x4  PRIVATE
+  ShufflePuzzleSolver::solver
+)
+
+
+##############################################################################
+install(
+  TARGETS
+    solve_3x3
+    solve_4x4
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
 )
