@@ -32,3 +32,43 @@ cmake  --build .
 ```
 
 You should now have the solver executables (e.g., `solve_3x3` and `solve_4x4`) under directory `build/`.
+
+
+## Running
+Consider the following 3x3 sliding puzzle:
+
+```
++---+---+---+
+| 8 | 4 |   |
++---+---+---+
+| 1 | 2 | 6 |
++---+---+---+
+| 7 | 5 | 3 |
++---+---+---+
+```
+
+We can let `solve_3x3` calculate a shortest winning strategy (note that 0 represents the hole):
+```bash
+$ ./solve_3x3  8 4 0  1 2 6  7 3 5
+Winning strategy:
+Move 6 up
+Move 2 right
+Move 4 down
+Move 8 right
+Move 1 up
+Move 4 left
+Move 8 down
+Move 6 left
+Move 2 up
+Move 8 right
+Move 3 up
+Move 5 left
+Move 8 down
+Move 3 right
+Move 6 down
+Move 2 left
+Move 3 up
+Move 6 right
+Move 5 up
+Move 8 left
+```

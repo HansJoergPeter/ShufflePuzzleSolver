@@ -11,7 +11,7 @@ int main(int const argc, char const* const argv[]) {
     return 1;
   }
 
-  // returns true iff 'conf' is the 3x3 target configuration
+  // returns true iff 'conf' is the 4x4 target configuration
   auto const isTarget = [](auto const conf) {
     if (conf.hole() != 15) {
       return false;
