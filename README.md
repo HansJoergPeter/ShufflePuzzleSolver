@@ -8,7 +8,7 @@ There are no dependencies except for reasonably new versions of [CMake](https://
 Under Ubuntu, you can install these dependencies via:
 ```bash
 sudo  apt-get update
-sudo  apt-get install build-essential cmake clang
+sudo  apt-get install build-essential cmake
 ```
 
 There is an optional dependency to [Google's Abseil library](https://abseil.io/).
@@ -36,7 +36,6 @@ You should now have the solver executables (e.g., `solve_3x3` and `solve_4x4`) u
 
 ## Running
 Consider the following 3x3 sliding puzzle:
-
 ```
 +---+---+---+
 | 8 | 4 |   |
@@ -47,7 +46,18 @@ Consider the following 3x3 sliding puzzle:
 +---+---+---+
 ```
 
-We can let `solve_3x3` calculate a shortest winning strategy (note that 0 represents the hole):
+Such a 3x3 puzzle is called solved iff it is in the following configuration:
+```
++---+---+---+
+| 1 | 2 | 3 |
++---+---+---+
+| 4 | 5 | 6 |
++---+---+---+
+| 7 | 8 |   |
++---+---+---+
+```
+
+We can let `solve_3x3` calculate a shortest winning strategy that transforms the given random puzzle incrementally into a solved one (note that 0 represents the hole):
 ```bash
 $ ./solve_3x3  8 4 0  1 2 6  7 3 5
 Winning strategy:
