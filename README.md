@@ -27,7 +27,7 @@ For example,
 # in the root directory of the repo
 mkdir build
 cd build
-cmake  ..
+cmake  ..  -DCMAKE_BUILD_TYPE=Release
 cmake  --build .
 ```
 
