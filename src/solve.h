@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <queue>
+#include <vector>
 
 #include <cstdint>
 
@@ -17,30 +18,36 @@ template <typename Configuration, typename IsTarget>
 void solve(Configuration const init, IsTarget const& isTarget) {
   using std::cout;
 
-  // prints a shuffle move that connects two configurations
-  auto const printMove = [](Configuration const from, Configuration const to) {
-    auto const h1 = from.hole();
-    auto const h2 = to.hole();
-    if (h2 == h1 + 1) {
-      cout << "Move " << (int)to(h1) << " left\n";
-    } else if (h2 == h1 - 1) {
-      cout << "Move " << (int)from(h2) << " right\n";
-    } else if (h2 == h1 + Configuration::columns) {
-      cout << "Move " << (int)to(h1) << " up\n";
-    } else if (h2 == h1 - Configuration::columns) {
-      cout << "Move " << (int)from(h2) << " down\n";
-    } else {
-      cout << from << " --> " << to << '\n';
-    }
-  };
-
   // called if the target configuration is reached
-  auto const reachedTarget = [&printMove](Configuration conf,
-                                          auto const& parents) {
-    cout << "Reverse winning strategy:\n";
+  auto const reachedTarget = [](Configuration conf, auto const& parents) {
+    std::vector<Configuration> strategy{conf};
     for (auto last = conf, conf = parents.at(last); last != conf;
          last = conf, conf = parents.at(last)) {
-      printMove(conf, last);
+      strategy.emplace_back(conf);
+    }
+
+    // prints a shuffle move that connects two configurations
+    auto const printMove = [](Configuration const from,
+                              Configuration const to) {
+      auto const h1 = from.hole();
+      auto const h2 = to.hole();
+      if (h2 == h1 + 1) {
+        cout << "Move " << (int)to(h1) << " left\n";
+      } else if (h2 == h1 - 1) {
+        cout << "Move " << (int)from(h2) << " right\n";
+      } else if (h2 == h1 + Configuration::columns) {
+        cout << "Move " << (int)to(h1) << " up\n";
+      } else if (h2 == h1 - Configuration::columns) {
+        cout << "Move " << (int)from(h2) << " down\n";
+      } else {
+        cout << from << " --> " << to << '\n';
+      }
+    };
+
+    cout << "Winning strategy:\n";
+    for (auto b = crbegin(strategy), a = b++, e = crend(strategy); b != e;
+         a = b++) {
+      printMove(*a, *b);
     }
   };
 
