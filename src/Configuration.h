@@ -14,6 +14,8 @@ namespace spsolver {
 template <uint8_t rows, uint8_t cols>
 class Configuration {
  public:
+  constexpr static auto columns = cols;
+
   constexpr Configuration() noexcept = default;
   constexpr Configuration(Configuration const&) noexcept = default;
   constexpr Configuration(Configuration&&) noexcept = default;

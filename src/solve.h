@@ -25,9 +25,9 @@ void solve(Configuration const init, IsTarget const& isTarget) {
       cout << "Move " << (int)to(h1) << " left\n";
     } else if (h2 == h1 - 1) {
       cout << "Move " << (int)from(h2) << " right\n";
-    } else if (h2 == h1 + 4) {
+    } else if (h2 == h1 + Configuration::columns) {
       cout << "Move " << (int)to(h1) << " up\n";
-    } else if (h2 == h1 - 4) {
+    } else if (h2 == h1 - Configuration::columns) {
       cout << "Move " << (int)from(h2) << " down\n";
     } else {
       cout << from << " --> " << to << '\n';
