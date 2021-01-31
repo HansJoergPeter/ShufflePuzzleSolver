@@ -60,12 +60,21 @@ void solve(Configuration const init, IsTarget const& isTarget) {
     succ(0, -1);
   };
 
-  // run BFS to find the shortest winning strategy
+  // the BFS key variables and data structures
   uint64_t steps = 0;
   HashMap<Configuration, Configuration> parents{{init, init}};
-  for (std::queue<Configuration> queue{{init}}; !queue.empty(); queue.pop()) {
+  std::queue<Configuration> queue{{init}};
+
+  auto const printProgress = [&] {
+    cout << "steps: " << steps << "\t visited: " << parents.size()
+         << "\t queue: " << queue.size() << '\n';
+  };
+
+  // the core BFS loop
+  for (; !queue.empty(); queue.pop()) {
     auto const conf = queue.front();
     if (isTarget(conf)) {
+      printProgress();
       reachedTarget(conf, parents);
       return;
     }
@@ -79,10 +88,10 @@ void solve(Configuration const init, IsTarget const& isTarget) {
 
     // progression logging
     if ((++steps % 1000000) == 0) {
-      cout << "steps: " << steps << "\t visited: " << parents.size()
-           << "\t queue: " << queue.size() << '\n';
+      printProgress();
     }
   }
+  printProgress();
 
   cout << "No winning strategy could be found!\n";
 }

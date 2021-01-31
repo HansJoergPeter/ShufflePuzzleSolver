@@ -1,5 +1,5 @@
 #include "Configuration.h"
-#include "solver.h"
+#include "solve.h"
 
 #include <iostream>
 
